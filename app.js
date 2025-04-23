@@ -1,8 +1,3 @@
-// import express from "express";
-// import cors from "cors";
-// import "dotenv/config";
-// import { v4 as uuidv4 } from "uuid";
-// import jwt from "jsonwebtoken";
 const express = require("express");
 const cors = require("cors");
 const { v4: uuidv4 } = require("uuid");
@@ -28,11 +23,11 @@ function verifyToken(req, res, next) {
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(verifyToken);
-app.use("/", commentRoutes);
-app.use("/", postRoutes);
-app.use("/", userRoutes);
+// app.use(verifyToken);
+// app.use("/", commentRoutes);
+// app.use("/", postRoutes);
+app.use("/user", userRoutes);
 
-app.listen(PORT, () => {
-  console.log("Server started on port 3000");
+app.listen(3000, () => {
+  console.log(`Listening to port ${PORT}`);
 });
