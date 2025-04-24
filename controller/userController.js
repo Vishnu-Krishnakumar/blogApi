@@ -26,15 +26,24 @@ async function login(req, res) {
   if (found) {
     try {
       jwt.sign({ user: user }, process.env.secret, (err, token) => {
+        res.cookie("auth_jwt", token, {
+          httpOnly: true,
+          secure: "isProd",
+          sameSite: "Strict",
+          maxAge: 60 * 60 * 1000,
+        });
         res.json({
           token,
         });
+        // res.json({
+        //   token,
+        // });
       });
     } catch (error) {
       console.log(error);
       next(error);
     }
-  }
+  } else res.sendStatus(403);
 }
 
 async function createUser(body) {
@@ -54,22 +63,24 @@ async function createUser(body) {
 }
 
 async function test(req, res) {
-  jwt.verify(
-    req.token,
-    process.env.secret,
-    { expiresIn: "60 minutes" },
-    (err, authData) => {
-      if (err) {
-        console.log(err);
-        res.sendStatus(403);
-      } else {
-        return res.json({
-          message: "Test works",
-          authData,
-        });
-      }
-    }
-  );
+  return res.json("verfied, good job!");
+  // console.log(req);
+  // jwt.verify(
+  //   req.cookies.auth_jwt,
+  //   process.env.secret,
+  //   { expiresIn: "60 minutes" },
+  //   (err, authData) => {
+  //     if (err) {
+  //       console.log(err);
+  //       res.sendStatus(403);
+  //     } else {
+  //       return res.json({
+  //         message: "Test works",
+  //         authData,
+  //       });
+  //     }
+  //   }
+  // );
 }
 
 module.exports = {

@@ -1,9 +1,9 @@
 const { Router } = require("express");
 const userRoutes = Router();
 const userController = require("../controller/userController");
-
+const auth = require("../auth/auth");
 const jwt = require("jsonwebtoken");
-
+const passport = require("passport");
 function verifyToken(req, res, next) {
   const bearerHeader = req.headers["authorization"];
 
@@ -21,5 +21,9 @@ function verifyToken(req, res, next) {
 
 userRoutes.post("/register", userController.register);
 userRoutes.post("/login", userController.login);
-userRoutes.post("/id", verifyToken, userController.test);
+userRoutes.post(
+  "/id",
+  auth.passport.authenticate("jwt", { session: false }),
+  userController.test
+);
 module.exports = userRoutes;

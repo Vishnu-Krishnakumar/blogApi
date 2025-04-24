@@ -16,16 +16,26 @@ async function createUser(user) {
 }
 
 async function userFound(user) {
+  console.log(user);
   const found = await prisma.user.findFirst({
     where: {
       email: user.email,
-      password: user.passsword,
     },
   });
   const match = bcrypt.compare(user.password, found.password);
   return match;
 }
+
+async function userVerify(user) {
+  const found = await prisma.user.findFirst({
+    where: {
+      email: user.email,
+    },
+  });
+  return found;
+}
 module.exports = {
   createUser,
   userFound,
+  userVerify,
 };
