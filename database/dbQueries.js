@@ -16,14 +16,14 @@ async function createUser(user) {
 }
 
 async function userFound(user) {
-  console.log(user);
   const found = await prisma.user.findFirst({
     where: {
       email: user.email,
     },
   });
   const match = bcrypt.compare(user.password, found.password);
-  return match;
+  if (match) return found;
+  else return null;
 }
 
 async function userVerify(user) {
@@ -34,8 +34,30 @@ async function userVerify(user) {
   });
   return found;
 }
+
+async function userPosts(user) {
+  const posts = await prisma.post.findMany({
+    where: {
+      authorId: user.id,
+    },
+  });
+  return posts;
+}
+async function createPost(post) {
+  const created = await prisma.post.create({
+    data: {
+      title: post.title,
+      content: post.content,
+      published: post.published,
+      authorId: post.authorId,
+    },
+  });
+  return created;
+}
 module.exports = {
   createUser,
   userFound,
   userVerify,
+  userPosts,
+  createPost,
 };

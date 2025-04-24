@@ -19,10 +19,12 @@ async function register(req, res) {
 async function login(req, res) {
   const found = await queries.userFound(req.body);
   const user = {
-    firstname: req.body.firstname,
-    lastname: req.body.lastname,
-    email: req.body.email,
+    id: found.id,
+    firstname: found.firstname,
+    lastname: found.lastname,
+    email: found.email,
   };
+  console.log(user);
   if (found) {
     try {
       jwt.sign({ user: user }, process.env.secret, (err, token) => {
@@ -35,9 +37,6 @@ async function login(req, res) {
         res.json({
           token,
         });
-        // res.json({
-        //   token,
-        // });
       });
     } catch (error) {
       console.log(error);
@@ -64,23 +63,6 @@ async function createUser(body) {
 
 async function test(req, res) {
   return res.json("verfied, good job!");
-  // console.log(req);
-  // jwt.verify(
-  //   req.cookies.auth_jwt,
-  //   process.env.secret,
-  //   { expiresIn: "60 minutes" },
-  //   (err, authData) => {
-  //     if (err) {
-  //       console.log(err);
-  //       res.sendStatus(403);
-  //     } else {
-  //       return res.json({
-  //         message: "Test works",
-  //         authData,
-  //       });
-  //     }
-  //   }
-  // );
 }
 
 module.exports = {
