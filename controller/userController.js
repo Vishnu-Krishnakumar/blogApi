@@ -4,12 +4,10 @@ const queries = require("../database/dbQueries");
 const jwt = require("jsonwebtoken");
 
 async function register(req, res) {
-  console.log(req.body);
   const user = await createUser(req.body);
-  console.log(user);
   try {
     const created = await queries.createUser(user);
-    res.send(created);
+    res.json(created);
   } catch (error) {
     console.log(error);
     next(error);

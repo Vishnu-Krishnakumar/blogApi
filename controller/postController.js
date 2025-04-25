@@ -25,19 +25,30 @@ async function getPost(req, res) {
 
 async function updatePost(req, res) {
   const postId = parseInt(req.params.postId);
-  const post = {
-    id: postId,
-    title: req.body.title,
-    content: req.body.content,
-  };
-  const updatedPost = await queries.updatePost(post);
-  res.json(updatedPost);
+  const check = await queries.getPost(postId);
+  if (check.authorId !== req.user.user.id)
+    return res.json("Not authorized to edit this post!");
+  else {
+    const post = {
+      id: postId,
+      title: req.body.title,
+      content: req.body.content,
+    };
+    const updatedPost = await queries.updatePost(post);
+    res.json(updatedPost);
+  }
 }
 
 async function deletePost(req, res) {
   const postId = parseInt(req.params.postId);
-  const deletedPost = await queries.deletePost(postId);
-  res.json("Post Deleted!", deletedPost);
+  const post = await queries.getPost(postId);
+  if (post.authorId !== req.user.user.id)
+    return res.json("Not authorized to delete this post!");
+  else {
+    const postId = parseInt(req.params.postId);
+    const deletedPost = await queries.deletePost(postId);
+    res.json("Post Deleted!", deletedPost);
+  }
 }
 module.exports = {
   allPosts,

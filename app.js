@@ -17,7 +17,7 @@ app.use(bodyParser.urlencoded());
 app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(auth.passport.initialize());
-// app.use("/", commentRoutes);
+app.use("/comments", commentRoutes);
 app.use("/posts", postRoutes);
 app.use("/user", userRoutes);
 

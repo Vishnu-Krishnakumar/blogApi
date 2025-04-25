@@ -1,0 +1,58 @@
+require("dotenv").config();
+const queries = require("../database/dbQueries");
+
+async function allComments(req, res) {
+  const postId = parseInt(req.params.postId);
+  const comments = await queries.postComments(postId);
+  res.json(comments);
+}
+
+async function createComment(req, res) {
+  const postId = parseInt(req.params.postId);
+  const comment = {
+    content: req.body.content,
+    username: req.user.user.email,
+    authorId: req.user.user.id,
+    postId: postId,
+  };
+  const createdComment = await queries.createComment(comment);
+  res.json(createdComment);
+}
+
+async function updateComment(req, res) {
+  const commentId = parseInt(req.params.commentId);
+  const postId = parseInt(req.params.postId);
+  const check = await queries.getComment(commentId);
+  if (check.authorId !== req.user.user.id)
+    return res.json("Not authorized to edit this post!");
+  else {
+    const comment = {
+      content: req.body.content,
+      postId: postId,
+      commentId: commentId,
+    };
+    const updatedComment = await queries.updateComment(comment);
+    res.json(updatedComment);
+  }
+}
+
+async function deleteComment(req, res) {
+  const commentId = parseInt(req.params.commentId);
+  const postId = parseInt(req.params.postId);
+  const check = await queries.getComment(commentId);
+  if (check === null) return res.json("Comment not found");
+  if (check.authorId !== req.user.user.id)
+    return res.json("Not authorized to edit this post!");
+  else {
+    const deletedComment = await queries.deleteComment(commentId);
+    return res.json(deletedComment);
+  }
+}
+
+module.exports = {
+  allComments,
+  createComment,
+  //   getComment,
+  updateComment,
+  deleteComment,
+};

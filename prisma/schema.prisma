@@ -35,6 +35,8 @@ model Comment{
   content   String     @db.Text
   posts     Post       @relation(fields: [postId], references: [id], onDelete:Cascade)
   postId    Int
+  author    User       @relation(fields: [authorId], references: [id], onDelete:Cascade)
+  authorId  Int
 }
 
 model User {
@@ -44,5 +46,6 @@ model User {
   email      String     @unique
   password   String
   posts      Post[]
+  comments   Comment[]
   author     Boolean    @default(false)
 }
