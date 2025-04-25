@@ -54,10 +54,45 @@ async function createPost(post) {
   });
   return created;
 }
+
+async function getPost(postId) {
+  const post = await prisma.post.findUnique({
+    where: {
+      id: postId,
+    },
+  });
+  return post;
+}
+async function updatePost(post) {
+  console.log(post);
+  const updatedPost = await prisma.post.update({
+    where: {
+      id: post.id,
+    },
+    data: {
+      title: post.title,
+      content: post.content,
+    },
+  });
+  console.log(updatedPost);
+  return updatedPost;
+}
+
+async function deletePost(postId) {
+  const deletedPost = await prisma.post.delete({
+    where: {
+      id: postId,
+    },
+  });
+  return deletedPost;
+}
 module.exports = {
   createUser,
   userFound,
   userVerify,
   userPosts,
   createPost,
+  getPost,
+  updatePost,
+  deletePost,
 };
