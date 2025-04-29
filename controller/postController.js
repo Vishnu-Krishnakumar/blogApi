@@ -7,10 +7,14 @@ async function allPosts(req, res) {
 }
 
 async function createPost(req, res) {
+  let published = false;
+  if (req.body.published === "true") {
+    published = true;
+  }
   const post = {
     title: req.body.title,
     content: req.body.content,
-    published: req.body.published || false,
+    published: published,
     authorId: req.user.user.id,
   };
   const created = await queries.createPost(post);
