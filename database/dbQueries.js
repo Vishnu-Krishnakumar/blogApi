@@ -21,7 +21,7 @@ async function userFound(user) {
       email: user.email,
     },
   });
-  const match = bcrypt.compare(user.password, found.password);
+  const match = await bcrypt.compare(user.password, found.password);
   if (match) return found;
   else return null;
 }
