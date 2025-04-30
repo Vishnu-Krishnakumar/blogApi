@@ -16,6 +16,7 @@ async function register(req, res) {
 
 async function login(req, res) {
   const found = await queries.userFound(req.body);
+  if (found === null) res.sendStatus(403);
   const user = {
     id: found.id,
     firstname: found.firstname,
