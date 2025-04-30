@@ -23,7 +23,7 @@ async function login(req, res) {
     email: found.email,
   };
   console.log(user);
-  if (found) {
+  if (found !== null) {
     try {
       jwt.sign({ user: user }, process.env.secret, (err, token) => {
         res.cookie("auth_jwt", token, {
