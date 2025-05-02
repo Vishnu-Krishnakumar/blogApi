@@ -12,7 +12,7 @@ async function register(req, res) {
     res.json(created);
   } catch (error) {
     console.log(error);
-    res.json(created);
+    res.json(error);
   }
 }
 
