@@ -7,6 +7,7 @@ async function register(req, res) {
   const user = await createUser(req.body);
   try {
     const created = await queries.createUser(user);
+    console.log(created);
     res.json(created);
   } catch (error) {
     console.log(error);
