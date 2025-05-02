@@ -29,8 +29,8 @@ const validateUser = [
     ...validateUser, (req,res,next)=>{
       const errors = validationResult(req);
         if(!errors.isEmpty()){
-          return res.status(400).render('Create User',{
-            title: "Create User",
+          return res.status(400).json({
+            title: "Validation failed",
             errors: errors.array(),
           });
       }
