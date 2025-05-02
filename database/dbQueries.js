@@ -13,6 +13,7 @@ async function createUser(user) {
       author: user.author,
     },
   });
+  return create;
 }
 
 async function userFound(user) {
