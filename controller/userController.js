@@ -14,7 +14,8 @@ async function register(req, res) {
   } catch (error) {
     if(error.code === "P2002"){
       res.status(400).json({
-        message:"Someone with this email is already registered!"
+        message:"Someone with this email is already registered!",
+        error: error,
       })
     }
   }
