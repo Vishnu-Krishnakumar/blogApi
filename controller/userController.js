@@ -8,12 +8,12 @@ async function register(req, res) {
   let created = '';
   try {
     created = await queries.createUser(user);
-    res.json({
+    res.status(201).json({
       message:"Created user!"
     })
   } catch (error) {
     if(error.code === "P2002"){
-      res.json({
+      res.status(400).json({
         message:"Someone with this email is already registered!"
       })
     }
