@@ -8,11 +8,15 @@ async function register(req, res) {
   const created = '';
   try {
     created = await queries.createUser(user);
-    console.log(created);
-    res.json(created);
+    res.json({
+      message:"Created user!"
+    })
   } catch (error) {
-    console.log(error);
-    res.json(error);
+    if(error.code === "P2002"){
+      res.json({
+        message:"Someone with this email is already registered!"
+      })
+    }
   }
 }
 
