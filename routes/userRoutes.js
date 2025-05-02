@@ -2,8 +2,8 @@ const { Router } = require("express");
 const userRoutes = Router();
 const userController = require("../controller/userController");
 const auth = require("../auth/auth");
-
-userRoutes.post("/register", userController.register);
+const validation = require("../validation/validation")
+userRoutes.post("/register",validation.validateUser, userController.register);
 userRoutes.post("/login", userController.login);
 userRoutes.post(
   "/id",
