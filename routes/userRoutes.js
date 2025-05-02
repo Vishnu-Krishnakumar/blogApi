@@ -3,7 +3,7 @@ const userRoutes = Router();
 const userController = require("../controller/userController");
 const auth = require("../auth/auth");
 const validation = require("../validation/validation")
-userRoutes.post("/register",validation.validateUser, userController.register);
+userRoutes.post("/register",validation, userController.register);
 userRoutes.post("/login", userController.login);
 userRoutes.post(
   "/id",

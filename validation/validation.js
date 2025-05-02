@@ -26,7 +26,7 @@ const validateUser = [
   
 
   module.exports = [
-    validateUser, (req,res,next)=>{
+    ...validateUser, (req,res,next)=>{
       const errors = validationResult(req);
         if(!errors.isEmpty()){
           return res.status(400).render('Create User',{
