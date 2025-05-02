@@ -5,13 +5,14 @@ const jwt = require("jsonwebtoken");
 
 async function register(req, res) {
   const user = await createUser(req.body);
+  const created = '';
   try {
-    const created = await queries.createUser(user);
+    created = await queries.createUser(user);
     console.log(created);
     res.json(created);
   } catch (error) {
     console.log(error);
-    next(error);
+    res.json(created);
   }
 }
 
