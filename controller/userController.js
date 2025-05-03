@@ -29,6 +29,7 @@ async function login(req, res) {
     firstname: found.firstname,
     lastname: found.lastname,
     email: found.email,
+    author:found.author,
   };
   console.log(user);
   if (found !== null) {
