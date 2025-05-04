@@ -1,11 +1,14 @@
 require("dotenv").config();
 const queries = require("../database/dbQueries");
 
-async function allPosts(req, res) {
+async function userPosts(req, res) {
   const posts = await queries.userPosts(req.user.user);
   res.json(posts);
 }
-
+async function allPosts(req,res){
+  const allPosts = await queries.allUserPosts();
+  res.json(allPosts);
+}
 async function createPost(req, res) {
   let published = false;
   if (req.body.published === "true") {
@@ -55,9 +58,10 @@ async function deletePost(req, res) {
   }
 }
 module.exports = {
-  allPosts,
+  userPosts,
   createPost,
   getPost,
   updatePost,
   deletePost,
+  allPosts,
 };

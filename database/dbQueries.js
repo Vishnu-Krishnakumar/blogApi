@@ -36,6 +36,12 @@ async function userVerify(user) {
   return found;
 }
 
+async function allUserPosts(){
+  const allPosts = await prisma.post.findMany();
+  return allPosts;
+}
+
+
 async function userPosts(user) {
   const posts = await prisma.post.findMany({
     where: {
@@ -151,4 +157,5 @@ module.exports = {
   getComment,
   updateComment,
   deleteComment,
+  allUserPosts,
 };

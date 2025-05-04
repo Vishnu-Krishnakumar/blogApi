@@ -6,7 +6,12 @@ const auth = require("../auth/auth");
 postRoutes.get(
   "/",
   auth.passport.authenticate("jwt", { session: false }),
-  postController.allPosts
+  postController.userPosts
+);
+
+postRoutes.get("/allPosts",
+auth.passport.authenticate("jwt",{session:false}),
+postController.allPosts
 );
 
 postRoutes.get(
