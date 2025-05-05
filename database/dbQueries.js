@@ -28,7 +28,7 @@ async function userFound(user) {
 }
 
 async function userVerify(user) {
-  const found = await prisma.user.findFirst({
+  const found = await prisma.user.findUnique({
     where: {
       email: user.email,
     },
