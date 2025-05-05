@@ -40,8 +40,10 @@ async function deleteComment(req, res) {
   const commentId = parseInt(req.params.commentId);
   const postId = parseInt(req.params.postId);
   const check = await queries.getComment(commentId);
+  const getPost = await queries.getPost(postId);
+  const postAuthorCheck = await queries.userVerify(req.user.user.email);
   if (check === null) return res.json("Comment not found");
-  if (check.authorId !== req.user.user.id)
+  if (postAuthorCheck.id !== getPost.authorId)
     return res.json("Not authorized to edit this post!");
   else {
     const deletedComment = await queries.deleteComment(commentId);
