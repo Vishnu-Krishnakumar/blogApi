@@ -37,17 +37,11 @@ async function updateComment(req, res) {
 }
 
 async function deleteComment(req, res) {
-  console.log(req);
-  console.log(req.user);
-  console.log(req.user.user.email)
-  
   const commentId = parseInt(req.params.commentId);
   const postId = parseInt(req.params.postId);
   const check = await queries.getComment(commentId);
   const getPost = await queries.getPost(postId);
   const postAuthorCheck = await queries.userVerify(req.user.user);
-  console.log(getPost);
-  console.log(postAuthorCheck);
   if (check === null) return res.json("Comment not found");
   if (postAuthorCheck.id !== getPost.authorId)
     return res.json("Not authorized to edit this post!");
