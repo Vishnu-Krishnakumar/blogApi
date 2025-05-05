@@ -38,6 +38,9 @@ async function updateComment(req, res) {
 
 async function deleteComment(req, res) {
   console.log(req);
+  console.log(req.user);
+  console.log(req.user.user.email)
+  
   const commentId = parseInt(req.params.commentId);
   const postId = parseInt(req.params.postId);
   const check = await queries.getComment(commentId);
