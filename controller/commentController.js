@@ -45,7 +45,7 @@ async function deleteComment(req, res) {
   const postId = parseInt(req.params.postId);
   const check = await queries.getComment(commentId);
   const getPost = await queries.getPost(postId);
-  const postAuthorCheck = await queries.userVerify(req.user.user.email);
+  const postAuthorCheck = await queries.userVerify(req.user.user);
   console.log(getPost);
   console.log(postAuthorCheck);
   if (check === null) return res.json("Comment not found");
