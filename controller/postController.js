@@ -33,6 +33,7 @@ async function getPost(req, res) {
 async function updatePost(req, res) {
   const postId = parseInt(req.params.postId);
   const check = await queries.getPost(postId);
+  console.log(req.body);
   if (check.authorId !== req.user.user.id)
     return res.json("Not authorized to edit this post!");
   else {
@@ -42,6 +43,7 @@ async function updatePost(req, res) {
       content: req.body.content,
       published: req.body.published === "true" ? true:false,
     };
+    console.log(post);
     const updatedPost = await queries.updatePost(post);
     res.json(updatedPost);
   }
