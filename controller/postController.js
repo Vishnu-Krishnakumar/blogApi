@@ -40,6 +40,7 @@ async function updatePost(req, res) {
       id: postId,
       title: req.body.title,
       content: req.body.content,
+      published: req.body.published === "true" ? true:false,
     };
     const updatedPost = await queries.updatePost(post);
     res.json(updatedPost);
@@ -49,7 +50,8 @@ async function updatePost(req, res) {
 async function deletePost(req, res) {
   const postId = parseInt(req.params.postId);
   const post = await queries.getPost(postId);
-  if (post.authorId !== req.user.user.id)
+  const postAuthorCheck = await queries.userVerify(req.user.user);
+  if (post.authorId !== postAuthorCheck.id)
     return res.json("Not authorized to delete this post!");
   else {
     const postId = parseInt(req.params.postId);
@@ -57,6 +59,7 @@ async function deletePost(req, res) {
     res.json("Post Deleted!", deletedPost);
   }
 }
+
 module.exports = {
   userPosts,
   createPost,

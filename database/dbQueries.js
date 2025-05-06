@@ -79,6 +79,7 @@ async function updatePost(post) {
     data: {
       title: post.title,
       content: post.content,
+      published: post.published,
     },
   });
   console.log(updatedPost);
