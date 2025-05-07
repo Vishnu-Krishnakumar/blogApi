@@ -37,7 +37,7 @@ async function login(req, res) {
       jwt.sign({ user: user }, process.env.secret, (err, token) => {
         res.cookie("auth_jwt", token, {
           httpOnly: true,
-          secure: "true",
+          secure: true,
           sameSite: "None",
           maxAge: 60 * 60 * 1000,
         });
