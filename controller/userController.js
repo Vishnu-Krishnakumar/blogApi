@@ -34,7 +34,7 @@ async function login(req, res) {
   console.log(user);
   if (found !== null) {
     try {
-      jwt.sign({ user: user }, process.env.secret, (err, token) => {
+      jwt.sign({ user: user }, process.env.secret,{ expiresIn: '1h' }, (err, token) => {
         res.cookie("auth_jwt", token, {
           httpOnly: true,
           secure: true,
